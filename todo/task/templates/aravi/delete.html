@@ -1,0 +1,36 @@
+
+<style>
+      .center-column{
+        max-width: 600px;
+        margin: auto;
+        background: #cf2525;
+        padding: 30px 35px;
+        border-radius: 12px;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+      }
+      .bnt{
+         color: black;
+         text-decoration: none;
+         top: 5px;
+      }
+      .btn{
+         border-radius:6px;
+         background:red ;
+         
+      }
+
+
+</style>
+
+
+<div class="center-column">
+         <p>Are you sure you want to delete "{{item}}"?</p>
+      <a class="bnt btn-info" href="{% url 'home' %}">Cancel</a>
+
+      <form method="POST" action=" ">
+         {% csrf_token %}
+         <input class="btn btn-danger" type="submit" name="confirm">
+
+ </form>
+</div>
+

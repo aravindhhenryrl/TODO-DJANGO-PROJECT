@@ -1,0 +1,124 @@
+<!-- Bootstrap 4 CDN -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/3TQUOhcWr7x97voRxT2MZw1T" crossorigin="anonymous">
+
+<style>
+    body {
+        background: linear-gradient(to right, #83a4d4, #b6fbff);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        padding: 40px 0;
+    }
+
+    .center-column {
+        max-width: 600px;
+        margin: auto;
+        background: #ffffff;
+        padding: 30px 35px;
+        border-radius: 12px;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    h3 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 25px;
+        font-weight: bold;
+    }
+
+    input[type="text"] {
+        width: 100%;
+        padding: 12px 16px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+    }
+
+    input::placeholder {
+        color: #999;
+    }
+
+    .btn-submit {
+        width: 100%;
+        background-color: #5a67d8;
+        color: #fff;
+        border: none;
+        padding: 12px;
+        font-size: 16px;
+        border-radius: 6px;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-submit:hover {
+        background-color: #434190;
+    }
+
+    .todo-list {
+        margin-top: 30px;
+    }
+
+    .item-row {
+        background-color: #f3f4f6;
+        border-left: 6px solid #5a67d8;
+        padding: 15px 20px;
+        border-radius: 6px;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .item-text {
+        flex-grow: 1;
+        margin: 0 15px;
+        font-size: 16px;
+        color: #333;
+    }
+
+    .item-text strike {
+        color: #999;
+    }
+
+    .btn-sm {
+        padding: 4px 10px;
+        font-size: 14px;
+    }
+
+    .btn-info {
+        background-color: #38b2ac;
+        border-color: #319795;
+    }
+
+    .btn-danger {
+        background-color: #f56565;
+        border-color: #e53e3e;
+    }
+</style>
+
+<div class="center-column">
+    <h3>📝 My To-Do List</h3>
+
+    <form method="POST" action="/">
+        {% csrf_token %}
+        {{ form.title }}
+        <button type="submit" class="btn btn-submit mt-2">➕ Add Task</button>
+    </form>
+
+    <div class="todo-list">
+        {% for task in tasks %}
+            <div class="item-row">
+                <a class="btn btn-sm btn-info" href="{% url 'update_task' task.id %}">✏️</a>
+                <a class="btn btn-sm btn-danger" href="{% url 'delete_task' task.id %}">🗑️</a>
+                <div class="item-text">
+                    {% if task.complete %}
+                        <strike>{{ task }}</strike>
+                    {% else %}
+                        {{ task }}
+                    {% endif %}
+                </div>
+            </div>
+        {% empty %}
+            <p class="text-center text-muted mt-4">No tasks yet — add one above!</p>
+        {% endfor %}
+    </div>
+</div>
